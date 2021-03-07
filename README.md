@@ -1,5 +1,13 @@
 ## コマンド
-### コントローラー作成
+### コンテナないで対話的そうさ　
+```
+docker exec -it laravel_sns_practice_app_1 bash
+```
+### appコンテナ内でコマンド実行
+```
+docker-compose exec app
+```
+### コントローラー作成d
 ```
 docker-compose exec app php artisan make:controller ArticleController
 ```
@@ -17,13 +25,18 @@ docker-compose exec app php artisan migrate
 ```
 ### ロールバック
 ```
-docker-compose exec workspace php artisan migrate:rollback
+docker-compose exec app php artisan migrate:rollback
 ```
 ### マイグレーション実行ステータス
 ```
-docker-compose exec workspace php artisan migrate:status
+docker-compose exec app php artisan migrate:status
 ```
 ### SQLに接続
 ```
 docker-compose exec db bash -c 'mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE}'
+```
+
+### ルートリスト
+```
+php artisan route:list
 ```
