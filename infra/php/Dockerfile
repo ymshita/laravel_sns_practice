@@ -12,6 +12,16 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/* && \
   docker-php-ext-install intl pdo_mysql zip bcmath
 
+# install Node.js and yarn.
+RUN apt-get update && apt-get install -y curl apt-transport-https wget
+# RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+#     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+#     apt-get update && apt-get install -y yarn
+RUN curl -sL https://deb.nodesource.com/setup_current.x | bash -
+RUN apt-get install -y nodejs
+RUN npm install npm@latest -g
+RUN npm install
+
 COPY ./php.ini /usr/local/etc/php/php.ini
 
 WORKDIR /work
