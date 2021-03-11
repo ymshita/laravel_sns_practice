@@ -1,7 +1,9 @@
 version: "3.8"
 services:
   app:
-    build: ./infra/php
+    build:
+      context: .
+      dockerfile: ./infra/php/Dockerfile
     volumes:
       - ./backend:/work
   web:

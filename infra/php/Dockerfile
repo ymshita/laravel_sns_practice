@@ -1,6 +1,7 @@
 FROM php:7.4-fpm-buster
 SHELL ["/bin/bash", "-oeux", "pipefail", "-c"]
 
+# set envs
 ENV COMPOSER_ALLOW_SUPERUSER=1 \
   COMPOSER_HOME=/composer
 
@@ -20,8 +21,16 @@ RUN apt-get update && apt-get install -y curl apt-transport-https wget
 RUN curl -sL https://deb.nodesource.com/setup_current.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install npm@latest -g
-RUN npm install
 
-COPY ./php.ini /usr/local/etc/php/php.ini
+COPY ./infra/php/php.ini /usr/local/etc/php/php.ini
 
 WORKDIR /work
+
+ADD ./backend/composer.json /work/composer.json
+ADD ./backend/composer.lock /work/composer.lock
+RUN composer global require "laravel/installer"
+RUN COMPOSER_MEMORY_LIMIT=-1 composer global require "laravel/jetstream"
+RUN pwd
+RUN artisan jetstream:install livewire
+RUN npm install
+RUN npm dev
