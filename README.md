@@ -1,5 +1,5 @@
 ## コマンド
-### コンテナないで対話的そうさ　
+### コンテナないで対話的操作
 ```
 docker exec -it laravel_sns_practice_app_1 bash
 ```
@@ -39,3 +39,54 @@ docker-compose exec db bash -c 'mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQ
 ```
 php artisan route:list
 ```
+## マニュアル
+### 1. ローカルの適当なところにクローン
+```
+$ git clone git@hogehoge.git
+```
+### 2. プロジェクトディレクトリに移動
+### 3. APP_KEYを設定
+1. composerをアップデート
+```
+docker-compose up -d --build
+docker-compose exec app composer install
+```
+- 一度ビルドしたら以降は`--build`を指定する必要はありません。
+2. `.env.example` から .envファイルを作成
+```
+$ docker-compose exec app cp .env.example .env
+```
+3. APP_KEYを作成
+```
+docker-compose exec app php artisan key:generate
+```
+4. .envファイルを確認し、`APP_KEY=`が自動で設定されていない場合には以下のコマンドの内容を設定
+```
+php artisan key:generate --show
+```
+### 4.DB作成とマイグレーション
+
+```
+docker-compose exec app php artisan migrate:fresh --seed
+```
+### 5.ブラウザで動作確認
+- [localhost](http://localhost:10080/)
+## テスト環境
+```
+http://xxx.xxx.xxx.xxx/
+http://test.hogehoge.jp/
+hoge / hogehoge
+```
+### デプロイ
+1. ssh接続
+2. プロジェクトのルートに移動
+3. developで `git checkout Dockerfile`
+4. developからプル
+5. developで `sed -i -e "s/production/test/g" Dockerfile`
+6. (必要あれば) developでマイグレーション
+7. developでビルド
+8. rootでアタッチ `docker exec -it --user root app bash`
+
+## 課題
+- npm install と npmコンパイルのタイミングがまだわかっていない。webpackを使うとまた違うのか
+- コンテナ内でユーザー設定ができていない

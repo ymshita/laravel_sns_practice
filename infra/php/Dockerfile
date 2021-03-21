@@ -4,16 +4,24 @@ SHELL ["/bin/bash", "-oeux", "pipefail", "-c"]
 # set envs
 ENV COMPOSER_ALLOW_SUPERUSER=1 \
   COMPOSER_HOME=/composer
+ARG TZ=Asia/Tokyo
+ENV TZ ${TZ}
+ENV LANG C.UTF-8
+ENV WORKSPACE=/usr/local/src
+COPY ./backend $WORKSPACE
 
 COPY --from=composer:1.10 /usr/bin/composer /usr/bin/composer
 
+# install bundler.
 RUN apt-get update && \
+  apt-get install -y sudo && \
+  apt-get install -y vim less && \
   apt-get -y install git unzip libzip-dev libicu-dev libonig-dev && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
   docker-php-ext-install intl pdo_mysql zip bcmath
 
-# install Node.js and yarn.
+# install Node.js and npm.
 RUN apt-get update && apt-get install -y curl apt-transport-https wget
 # RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
 #     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
@@ -22,15 +30,24 @@ RUN curl -sL https://deb.nodesource.com/setup_current.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install npm@latest -g
 
+# create user and group.
+# RUN groupadd -r --gid 1000 dev && \
+#   useradd -m -r --uid 1000 --gid 1000 dev
+
+# create directory.
+# RUN mkdir -p $WORKSPACE&& \
+#   chown -R dev:dev $WORKSPACE
+
 COPY ./infra/php/php.ini /usr/local/etc/php/php.ini
 
-WORKDIR /work
+# USER dev
+WORKDIR $WORKSPACE
 
 ADD ./backend/composer.json /work/composer.json
 ADD ./backend/composer.lock /work/composer.lock
 RUN composer global require "laravel/installer"
-RUN COMPOSER_MEMORY_LIMIT=-1 composer global require "laravel/jetstream"
-RUN pwd
-RUN artisan jetstream:install livewire
-RUN npm install
-RUN npm dev
+
+CMD COMPOSER_MEMORY_LIMIT=-1 composer require "laravel/jetstream" && \
+  /usr/local/src/artisan jetstream:install livewire  && \
+  npm install && \
+  npm run dev
