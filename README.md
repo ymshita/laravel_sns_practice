@@ -88,5 +88,5 @@ hoge / hogehoge
 8. rootでアタッチ `docker exec -it --user root app bash`
 
 ## 課題
-- npm install と npmコンパイルのタイミングがまだわかっていない。webpackを使うとまた違うのか
+- npm install と npmコンパイル(npm run)のタイミングがまだわかっていない。webpackを使うとまた違うのか
 - コンテナ内でユーザー設定ができていない
