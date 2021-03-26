@@ -45,7 +45,7 @@ WORKDIR $WORKSPACE
 
 ADD ./backend/composer.json /work/composer.json
 ADD ./backend/composer.lock /work/composer.lock
-RUN composer global require "laravel/installer"
+# RUN composer global require "laravel/installer"
 
 # CMD COMPOSER_MEMORY_LIMIT=-1 composer require "laravel/jetstream" && \
 #   /usr/local/src/artisan jetstream:install livewire  && \

@@ -1,3 +1,4 @@
+backend/vendor/composer/
 /backend/vendor/
 /vendor/
 node_modules/
@@ -16,6 +17,3 @@ storage/*.key
 Homestead.yaml
 Homestead.json
 /.vagrant
-backend/vendor/composer/autoload_classmap.php
-backend/vendor/composer/autoload_static.php
-backend/vendor/composer/installed.json
