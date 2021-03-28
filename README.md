@@ -93,3 +93,10 @@ docker-compose exec db bash -c 'mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQ
 ```
 docker-compose exec app php artisan route:list
 ```
+### キャッシュクリア系
+```
+docker-compose exec app php artisan cache:clear
+docker-compose exec app php artisan config:clear
+docker-compose exec app php artisan route:clear
+docker-compose exec app php artisan view:clear
+```
