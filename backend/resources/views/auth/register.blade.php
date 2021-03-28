@@ -10,7 +10,8 @@
             <div class="card mt-3">
                 <div class="card-body text-center">
                     <h2 class="h3 card-title text-center mt-2">ユーザー登録</h2>
-                    <x-jet-validation-errors class="mb-4" />
+                    @include('error_card_list')
+                    {{-- <x-jet-validation-errors class="mb-4" /> --}}
                     <div class="card-text">
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
