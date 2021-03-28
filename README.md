@@ -100,3 +100,7 @@ docker-compose exec app php artisan config:clear
 docker-compose exec app php artisan route:clear
 docker-compose exec app php artisan view:clear
 ```
+### tinkerの起動
+```
+docker-compose exec workspace php artisan tinker
+```
