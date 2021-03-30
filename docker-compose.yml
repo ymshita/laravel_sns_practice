@@ -23,6 +23,19 @@ services:
       - db-store:/var/lib/mysql
     ports:
       - 33060:3306
-
+  db2:
+    build: ./infra/postgres
+    container_name: 'db2'
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: laravel_sns
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev111
+      POSTGRES_ROOT_PASSWORD: GOnZ0k5
+      TZ: Asia/Tokyo
+    volumes:
+      - db_data:/var/lib/postgresql/data
 volumes:
   db-store:
+  db_data: {}
