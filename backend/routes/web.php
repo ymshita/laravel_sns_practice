@@ -18,7 +18,11 @@ use App\Http\Controllers\ArticleController;
 //     return view('welcome');
 // });
 
-Route::get('/', [ArticleController::class, 'index']);
+Route::get('/', [ArticleController::class, 'index'])->name('article.index');
+Route::resource('articles', ArticleController::class)->except(['index'])->middleware('auth');
+
+
+// TODO: rewrite
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
