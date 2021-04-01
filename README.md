@@ -69,6 +69,10 @@ docker-compose exec app php artisan make:controller ArticleController
 ```
 docker-compose exec app php artisan make:model Article
 ```
+### フォームリクエスト作成
+```
+docker-compose exec app php artisan make:request ArticleRequest
+```
 ### マイグレーションファイル作成
 ```
 docker-compose exec app php artisan make:migration create_articles_table --create=articles
