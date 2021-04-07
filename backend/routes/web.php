@@ -18,8 +18,9 @@ use App\Http\Controllers\ArticleController;
 //     return view('welcome');
 // });
 
-Route::get('/', [ArticleController::class, 'index'])->name('article.index');
-Route::resource('articles', ArticleController::class)->except(['index'])->middleware('auth');
+Route::get('/', [ArticleController::class, 'index'])->name('articles.index');
+Route::resource('articles', ArticleController::class)->except(['index', 'show'])->middleware('auth');
+Route::resource('articles', ArticleController::class)->only(['show']);
 
 
 // TODO: rewrite
