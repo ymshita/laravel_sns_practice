@@ -1,4 +1,37 @@
-<x-guest-layout>
+@extends('app')
+@section('title', 'パスワード再設定')
+@section('content')
+    <div class="container">
+        <div class="row">
+            <div class="mx-auto col col-12 col-sm-11 col-md-9 col-lg-7 col-xl-6">
+                <h1 class="text-center">memo</h1>
+                <div class="card mt-3">
+                    <div class="card-body text-center">
+                        <h2 class="h3 card-title text-center mt-2">パスワード再設定</h2>
+                        @include('error_card_list')
+                        @if (session('status'))
+                            <div class="card-text alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+                        <div class="card-text">
+                            <form action="{{ route('password.email') }}" method="post">
+                                <div class="md-form">
+                                    @csrf
+                                    <label for="email">メールアドレス</label>
+                                    <input type="text" name="email" id="email" class="form-control" required>
+                                </div>
+                                <button type="submit" class="btn btn-block blue-gradient mt-2 mb-2">メール送信</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+{{-- <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
             <x-jet-authentication-card-logo />
@@ -31,4 +64,4 @@
             </div>
         </form>
     </x-jet-authentication-card>
-</x-guest-layout>
+</x-guest-layout> --}}
