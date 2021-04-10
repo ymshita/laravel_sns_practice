@@ -38,20 +38,23 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::get('/forgot-password', function () {
     return view('auth.forgot-password');
 })->middleware('guest')->name('password.request');
+
 // for password reset, submit request
 Route::post('/forgot-password', function (Request $request) {
     $request->validate(['email' => 'required|email']);
-    $status = Password::sendRequestLink(
+    $status = Password::sendResetLink(
         $request->only('email')
     );
     return $status === Password::RESET_LINK_SENT
         ? back()->with(['status' => __($status)])
-        : back()->withErrors(['email' => __('status')]);
+        : back()->withErrors(['email' => __($status)]);
 })->middleware('guest')->name('password.email');
+
 // for password reset, get new password form
 Route::get('/reset-password/{token}', function ($token) {
     return view('auth.reset-password', ['token' => $token]);
 })->middleware('guest')->name('password.reset');
+
 // for password reset, submit new password
 Route::post('/reset-password', function (Request $request) {
     $request->validate([
@@ -65,9 +68,9 @@ Route::post('/reset-password', function (Request $request) {
         function ($user, $password) use ($request) {
             $user->forceFill([
                 'password' => Hash::make($password)
-            ])->save();
+            ])->setRememberToken(Str::random(60));
 
-            $user->setRememberToken(Str::random(60));
+            $user->save();
 
             event(new PasswordReset($user));
         }
