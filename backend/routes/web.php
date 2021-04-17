@@ -51,8 +51,14 @@ Route::post('/forgot-password', function (Request $request) {
 })->middleware('guest')->name('password.email');
 
 // for password reset, get new password form
-Route::get('/reset-password/{token}', function ($token) {
-    return view('auth.reset-password', ['token' => $token]);
+Route::get('/reset-password/{token}', function ($token, Request $request) {
+    return view(
+        'auth.reset-password',
+        [
+            'token' => $token,
+            'email' => $request->email
+        ]
+    );
 })->middleware('guest')->name('password.reset');
 
 // for password reset, submit new password
