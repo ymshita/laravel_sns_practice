@@ -6,7 +6,11 @@ npm-debug.log
 yarn-error.log
 backend/public/css
 backend/public/json
+backend/vendor/composer/autoload_classmap.php
+backend/vendor/composer/autoload_static.php
 backend/public/mix-manifest.json
+backend/public/js/app.js
+backend/public/css/app.css
 
 # Laravel 4 specific
 bootstrap/compiled.php
@@ -20,12 +24,3 @@ storage/*.key
 Homestead.yaml
 Homestead.json
 /.vagrant
-
-
-backend/vendor/composer/autoload_classmap.php
-backend/vendor/composer/autoload_static.php
-backend/public/js/app.js
-backend/public/mix-manifest.json
-backend/public/js/app.js
-backend/public/js/app.js
-backend/public/css/app.css
