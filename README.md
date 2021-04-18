@@ -75,7 +75,7 @@ docker-compose exec app php artisan make:request ArticleRequest
 ```
 ### マイグレーションファイル作成
 ```
-docker-compose exec app php artisan make:migration create_articles_table --create=articles
+docker-compose exec app php artisan make:migration create_XXXs_table --create=XXXs
 ```
 ### マイグレーション実行
 ```
