@@ -1,12 +1,12 @@
 backend/vendor/composer/
-/backend/vendor/
+backend/vendor/
 /vendor/
 node_modules/
 npm-debug.log
 yarn-error.log
-/public/css
-/public/json
-/public/mix-manifest.json
+backend/public/css
+backend/public/json
+backend/public/mix-manifest.json
 
 # Laravel 4 specific
 bootstrap/compiled.php
@@ -20,3 +20,5 @@ storage/*.key
 Homestead.yaml
 Homestead.json
 /.vagrant
+backend/vendor/composer/autoload_classmap.php
+backend/vendor/composer/autoload_static.php
