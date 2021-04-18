@@ -4,7 +4,7 @@
 import './bootstrap'
 import 'alpinejs'
 import Vue from 'vue'
-import ArticleLike from './components/ArticleLike'
+import ArticleLike from './components/ArticleLike.vue'
 
 const app = new Vue({
     el: '#app',
