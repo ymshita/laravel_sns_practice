@@ -27,7 +27,14 @@ php artisan key:generate --show
 ```
 docker-compose exec app php artisan migrate:fresh --seed
 ```
-### 5.ブラウザで動作確認
+
+### 5.フロントエンドライブラリのコンパイル
+```
+docker-compose exec app npm run dev
+OR
+docker-compose exec app npm run watch-poll
+```
+### 6.ブラウザで動作確認
 - [localhost](http://localhost:10080/)
 
 
