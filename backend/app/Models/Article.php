@@ -27,6 +27,11 @@ class Article extends Model
         return $this->belongsToMany(User::class, 'likes')->withTimestamps();
     }
 
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class)->withTimestamps();
+    }
+
     /**
      * 記事がいいね済みかどうかを判定
      */
