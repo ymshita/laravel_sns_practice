@@ -36,11 +36,11 @@ services:
       TZ: Asia/Tokyo
     volumes:
       - db_data:/var/lib/postgresql/data
-  mailhog:
-    image: mailhog/mailhog
-    container_name: "mailhog"
-    ports:
-      - 8025:8025
+  # mailhog:
+  #   image: mailhog/mailhog
+  #   container_name: "mailhog"
+  #   ports:
+  #     - 8025:8025
 volumes:
   db-store:
   db_data: {}
