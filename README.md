@@ -5,12 +5,19 @@ $ git clone git@hogehoge.git
 ```
 ### 2. プロジェクトディレクトリに移動
 ### 3. APP_KEYを設定
-1. composerをアップデート
+
+1. コンテナを実行(`--build`指定は初回のみ)
 ```
 docker-compose up -d --build
+```
+2. composerパッケージをインストール
+```
 docker-compose exec app composer install
 ```
-- 一度ビルドしたら以降は`--build`を指定する必要はありません。
+3. npmパッケージをインストール
+```
+docker-compose exec app npm install
+```
 2. `.env.example` から .envファイルを作成
 ```
 docker-compose exec app cp .env.example .env
