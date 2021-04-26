@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Tag;
 use App\Http\Requests\ArticleRequest;
+use Illuminate\Support\Facades\Log;
 
 class ArticleController extends Controller
 {
@@ -46,6 +47,7 @@ class ArticleController extends Controller
 
     public function edit(Article $article)
     {
+        Log::debug('edit');
         return view('articles.edit', ['article' => $article]);
     }
 
