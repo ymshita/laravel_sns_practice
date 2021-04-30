@@ -1,10 +1,13 @@
 @csrf
 <div class="md-form">
-    <label for=""></label>
+    <label for="">タイトル</label>
     <input type="text" name="title" id="title" class="form-control" required value="{{ $article->title ?? old('title') }}" placeholder="タイトル">
 </div>
 <div class="form-group">
-    <article-tags-input>
+    <article-tags-input
+    :initial-tags='@json($tagNames ?? [])'
+    :autocomplete-items='@json($allTagNames ?? [])'
+    >
     </article-tags-input>
 </div>
 <div class="form-group">

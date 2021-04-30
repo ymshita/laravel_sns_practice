@@ -1,10 +1,6 @@
 <template>
   <div>
-    <input
-    type="hidden"
-    name="tags"
-    :value="tagsJson"
-    >
+    <input type="hidden" name="tags" :value="tagsJson" />
     <vue-tags-input
       v-model="tag"
       :tags="tags"
@@ -21,27 +17,20 @@ export default {
   components: {
     VueTagsInput,
   },
+  props: {
+    initialTags: {
+      type: Array,
+      default: [],
+    },
+    autocompleteItems: {
+      type: Array,
+      default: [],
+    },
+  },
   data() {
     return {
       tag: "",
-      tags: [],
-      autocompleteItems: [
-        {
-          text: "Spain",
-        },
-        {
-          text: "France",
-        },
-        {
-          text: "USA",
-        },
-        {
-          text: "Germany",
-        },
-        {
-          text: "China",
-        },
-      ],
+      tags: this.initialTags,
     };
   },
   computed: {
@@ -50,9 +39,9 @@ export default {
         return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
       });
     },
-    tagsJson(){
-      return JSON.stringify(this.tags)
-    }
+    tagsJson() {
+      return JSON.stringify(this.tags);
+    },
   },
 };
 </script>
