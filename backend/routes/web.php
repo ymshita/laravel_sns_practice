@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
@@ -27,16 +28,11 @@ use Illuminate\Support\Str;
 Route::get('/', [ArticleController::class, 'index'])->name('articles.index');
 Route::resource('articles', ArticleController::class)->except(['index', 'show'])->middleware('auth');
 Route::resource('articles', ArticleController::class)->only(['show']);
-Route::prefix('articles')->name('articles.')->group(function() {
+Route::prefix('articles')->name('articles.')->group(function () {
     Route::put('/{article}/like', [ArticleController::class, 'like'])->name('like')->middleware('auth');
     Route::delete('/{article}/like', [ArticleController::class, 'unlike'])->name('like')->middleware('auth');
 });
-
-
-// TODO: rewrite
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::get('/tags/{name}', [TagController::class, 'show'])->name('tags.show');
 
 // for password reset, get request page
 Route::get('/forgot-password', function () {
