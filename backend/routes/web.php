@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
@@ -29,6 +30,9 @@ Route::prefix('articles')->name('articles.')->group(function () {
     Route::delete('/{article}/like', [ArticleController::class, 'unlike'])->name('like')->middleware('auth');
 });
 Route::get('/tags/{name}', [TagController::class, 'show'])->name('tags.show');
+Route::prefix('users')->name('users.')->group(function () {
+    Route::get('/{name}', [UserController::class, 'show'])->name('show');
+});
 
 // for password reset, get request page
 Route::get('/forgot-password', function () {
