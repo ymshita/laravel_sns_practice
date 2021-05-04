@@ -11,9 +11,9 @@
                         <i class="fas fa-user-circle fa-3x"></i>
                     </a>
                     @if (Auth::id() !== $user->id)
-                        <follow-button class="ml-auto"
-                        :initial-is-followed-by='@json($user->isFollowedBy(Auth::user()))'
-                        >
+                        <follow-button class="ml-auto" :initial-is-followed-by='@json($user->isFollowedBy(Auth::user()))'
+                            :authorized='@json(Auth::check())'
+                            endpoint="{{ route('users.follow', ['name' => $user->name]) }}">
                         </follow-button>
                     @endif
                 </div>
@@ -26,13 +26,28 @@
             <div class="card-body">
                 <div class="card-text">
                     <a href="" class="text-muted">
-                        10 フォロー
+                        {{ $user->count_followings }} フォロー
                     </a>
                     <a href="" class="text-muted">
-                        10 フォロワー
+                        {{ $user->count_followers }} フォロワー
                     </a>
                 </div>
             </div>
         </div>
+        <ul class="nav nav-tabs nav-justified mt-3">
+            <li class="nav-item">
+                <a href="{{ route('users.show', ['name' => $user->name]) }}" class="nav-link text-muted active">
+                    記事
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="" class="nav-link text-muted">
+                    いいね
+                </a>
+            </li>
+        </ul>
+        @foreach ($articles as $article)
+            @include('articles.card')
+        @endforeach
     </div>
 @endsection

@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-// use Illuminate\Contracts\Auth\CanResetPassword;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
 use App\Mail\BareMail;
 use App\Notifications\PasswordResetNotification;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -67,7 +67,29 @@ class User extends Authenticatable
 
     public function followers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'follows', 'followee_id', 'follower_id');
+        return $this->belongsToMany(
+            User::class,
+            'follows',
+            'followee_id', // リレーション元, 自分
+            'follower_id' // リレーション先, フォロワー
+        )
+            ->withTimestamps();
+    }
+
+    public function followings(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            User::class,
+            'follows',
+            'follower_id', // リレーション元, 自分
+            'followee_id' // リレーション先, フォロー相手
+        )
+            ->withTimestamps();
+    }
+
+    public function articles(): HasMany
+    {
+        return $this->hasMany(Article::class);
     }
 
     public function sendPasswordResetNotification($token)
@@ -80,5 +102,15 @@ class User extends Authenticatable
         return $user
             ? (bool) $this->followers->where('id', $user->id)->count()
             : false;
+    }
+
+    public function getCountFollowersAttribute(): int
+    {
+        return $this->followers->count();
+    }
+
+    public function getCountFollowingsAttribute(): int
+    {
+        return $this->followings->count();
     }
 }
