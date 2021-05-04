@@ -92,6 +92,12 @@ class User extends Authenticatable
         return $this->hasMany(Article::class);
     }
 
+    public function likes(): BelongsToMany
+    {
+        return $this->belongsToMany(Article::class, 'likes')
+            ->withTimestamps();
+    }
+
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new PasswordResetNotification($token, new BareMail()));
