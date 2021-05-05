@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,19 @@ use Illuminate\Support\Str;
 |
 */
 
+Route::prefix('login')->name('login.')->group(function () {
+    Route::get('/{provider}', function (string $provider) {
+        return Socialite::driver($provider)->redirect();
+    })->name('{provider}');
+    Route::get('/{provider}/callback', function (Request $request, string $provider) {
+        $providedUser = Socialite::driver($provider)->stateless()->user();
+        $user = User::where('email', $providedUser->getEmail())->first();
+        if ($user) {
+            auth()->guard()->login($user, true);
+            return redirect('/');
+        }
+    })->name('{provider}.callback');
+});
 Route::get('/', [ArticleController::class, 'index'])->name('articles.index');
 Route::resource('articles', ArticleController::class)->except(['index', 'show'])->middleware('auth');
 Route::resource('articles', ArticleController::class)->only(['show']);
