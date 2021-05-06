@@ -1,3 +1,9 @@
+backend/vendor/composer/autoload_classmap.php
+backend/vendor/composer/autoload_files.php
+backend/vendor/composer/autoload_psr4.php
+backend/vendor/composer/autoload_static.php
+backend/vendor/composer/installed.json
+
 backend/vendor/composer/
 backend/vendor/
 /vendor/
@@ -6,8 +12,6 @@ npm-debug.log
 yarn-error.log
 backend/public/css
 backend/public/json
-backend/vendor/composer/autoload_classmap.php
-backend/vendor/composer/autoload_static.php
 backend/public/mix-manifest.json
 backend/public/js/app.js
 backend/public/css/app.css
