@@ -4,8 +4,32 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
-    //
+    public function redirectToProvider(string $provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function handleProviderCallback(Request $request, string $provider)
+    {
+        $providerUser = Socialite::driver($provider)->stateless()->user();
+        $user = User::where('email', $providerUser->getEmail())->first();
+
+        if ($user) {
+            auth()->login($user, true);
+            return $this->sendLoginResponse($request);
+        }
+
+        return redirect()->route('register.{provider}.callback', [
+            'provider' => $provider,
+            'email' => $providerUser->getEmail(),
+            'token' => $providerUser->token,
+        ]);
+    }
 }

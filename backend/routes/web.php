@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
@@ -23,19 +25,17 @@ use App\Models\User;
 |
 */
 
+// ソーシャルログイン
 Route::prefix('login')->name('login.')->group(function () {
-    Route::get('/{provider}', function (string $provider) {
-        return Socialite::driver($provider)->redirect();
-    })->name('{provider}');
-    Route::get('/{provider}/callback', function (Request $request, string $provider) {
-        $providedUser = Socialite::driver($provider)->stateless()->user();
-        $user = User::where('email', $providedUser->getEmail())->first();
-        if ($user) {
-            auth()->guard()->login($user, true);
-            return redirect('/');
-        }
-    })->name('{provider}.callback');
+    Route::get('/{provider}', [LoginController::class, 'redirectToProvider'])->name('{provider}');
+    Route::get('/{provider}/callback',  [LoginController::class, 'handleProviderCallback'])->name('{provider}.callback');
 });
+// ソーシャルログインからのユーザー登録
+Route::prefix('register')->name('register.')->group(function () {
+    Route::get('/{provider}/callback', [RegisterController::class, 'showProviderUserRegistrationForm'])->name('{provider}.callback');
+    Route::post('/{provider}', [RegisterController::class, 'registerProviderUser'])->name('{provider}');
+});
+
 Route::get('/', [ArticleController::class, 'index'])->name('articles.index');
 Route::resource('articles', ArticleController::class)->except(['index', 'show'])->middleware('auth');
 Route::resource('articles', ArticleController::class)->only(['show']);
