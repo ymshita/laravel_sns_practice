@@ -21,7 +21,8 @@ RUN apt-get update && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
   docker-php-ext-install intl pdo_mysql zip bcmath && \
-  docker-php-ext-install pdo pdo_pgsql pgsql mbstring
+  docker-php-ext-install pdo pdo_pgsql pgsql mbstring &&\
+  pecl install xdebug && docker-php-ext-enable xdebug
 
 # install Node.js and npm.
 RUN apt-get update && apt-get install -y curl apt-transport-https wget
