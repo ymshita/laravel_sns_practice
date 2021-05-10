@@ -15,6 +15,7 @@ backend/public/json
 backend/public/mix-manifest.json
 backend/public/js/app.js
 backend/public/css/app.css
+.devcontainer
 
 # Laravel 4 specific
 bootstrap/compiled.php
