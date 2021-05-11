@@ -43,6 +43,8 @@ RUN npm install npm@latest -g
 
 COPY ./infra/php/php.ini /usr/local/etc/php/php.ini
 
+COPY ./.devcontainer/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
 # USER dev
 WORKDIR $WORKSPACE
 
