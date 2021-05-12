@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use Laravel\Fortify\Contracts\LoginResponse;
 
 class LoginController extends Controller
 {
@@ -23,7 +24,7 @@ class LoginController extends Controller
 
         if ($user) {
             auth()->login($user, true);
-            return $this->sendLoginResponse($request);
+            return app(LoginResponse::class);
         }
 
         return redirect()->route('register.{provider}.callback', [
