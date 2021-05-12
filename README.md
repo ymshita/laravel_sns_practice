@@ -123,3 +123,7 @@ docker-compose build --no-cache
 ```
 docker-compose exec workspace php artisan tinker
 ```
+### vendor publish
+```
+php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
+```
