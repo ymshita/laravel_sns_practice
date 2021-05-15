@@ -1,6 +1,6 @@
 <?php
 
-return [
+$tmp = [
 
     /*
     |--------------------------------------------------------------------------
@@ -165,7 +165,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Barryvdh\Debugbar\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -229,8 +228,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
-
     ],
 
 ];
+if (env('APP_ENV') == 'development') {
+    $tmp['providers'][] = Barryvdh\Debugbar\ServiceProvider::class;
+    $tmp['aliases']['Debugbar']  = Barryvdh\Debugbar\Facade::class;
+}
+
+return $tmp;
