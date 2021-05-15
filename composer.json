@@ -1,7 +1,11 @@
 {
-    "scripts": {
-        "post-install-cmd": [
-            "cd backend && composer install"
-        ]
-    }
+    "repositories": [
+        {
+            "type": "path",
+            "url": "backend",
+            "options": {
+                "symlink": false
+            }
+        }
+    ]
 }
