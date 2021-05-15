@@ -1,0 +1,5 @@
+{
+    "scripts": {
+        "heroku-postbuild": "npm i --prefix=backend"
+    }
+}
