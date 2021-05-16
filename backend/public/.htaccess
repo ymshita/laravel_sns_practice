@@ -13,7 +13,7 @@
 
     # HTTPSアクセスの場合のみベーシック認証を行う
     <If "%{HTTP:X-Forwarded-Proto} == 'https'">
-        AuthUserFile ./.htpasswd
+        AuthUserFile /app/public/.htpasswd
         AuthType Basic
         AuthName "Restricted Access"
         Require valid-user
