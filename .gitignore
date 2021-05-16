@@ -31,3 +31,4 @@ Homestead.json
 /.vagrant
 backend/.vscode/launch.json
 # backend/public/.htpasswd
+backend/public/.htpasswd
