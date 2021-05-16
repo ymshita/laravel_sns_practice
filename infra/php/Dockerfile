@@ -18,6 +18,7 @@ RUN apt-get update && \
   apt-get install -y vim less && \
   apt-get -y install git unzip libzip-dev libicu-dev libonig-dev && \
   apt-get install -y libpq-dev && \
+  apt-get install apache2-utils && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
   docker-php-ext-install intl pdo_mysql zip bcmath && \
