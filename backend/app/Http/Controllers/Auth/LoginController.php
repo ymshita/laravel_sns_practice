@@ -23,6 +23,8 @@ class LoginController extends Controller
         $user = User::where('email', $providerUser->getEmail())->first();
 
         if ($user) {
+            $user->fb_token = $request->token;
+            $user->save();
             auth()->login($user, true);
             return app(LoginResponse::class);
         }
