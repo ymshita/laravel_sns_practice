@@ -40,14 +40,14 @@ class RegisterController extends Controller
         $token = $request->token;
         // $copied = clone $token;
         $providerUser = Socialite::driver($provider)->userFromToken($token);
-        $fbToken = $providerUser->token;
-        
+
         $user = User::create(
             [
                 'name' => $request->name,
                 'email' => $providerUser->getEmail(),
                 'password' => Hash::make(Str::random()),
-                'fb_token' => $fbToken,
+                'fb_id' => $providerUser->id,
+                'fb_token' => $providerUser->token,
             ]
         );
 
