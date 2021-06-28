@@ -10,7 +10,7 @@ ENV LANG C.UTF-8
 ENV WORKSPACE=/usr/local/src
 COPY ./backend $WORKSPACE
 
-COPY --from=composer:1.10 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.1 /usr/bin/composer /usr/bin/composer
 
 # install bundler.
 RUN apt-get update && \
